@@ -1,0 +1,40 @@
+<html>
+
+<head>
+ <title>Finance Control Center</title>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+ <script>
+$(document).ready(function() {
+
+$("#duplicatesBtn").click(function() {
+	var request = $.ajax({
+		url: "app_checkForDuplicates.php",
+		type: "GET",			
+		dataType: "html"
+	});
+
+	request.done(function(msg) {
+		$("#consoleDiv").html(msg);			
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		alert( "Request failed: " + textStatus );
+	});
+});
+
+});
+ </script>
+</head>
+
+<body>
+
+<button class="commandBtn" id="duplicatesBtn">Check for duplicates</button>
+<button class="commandBtn" id="classificationBtn">Propose classifications</button>
+
+<div id="consoleDiv">
+ I am the console.
+</div>
+
+</body>
+</html>
