@@ -3,6 +3,8 @@
 <head>
  <title>Finance Control Center</title>
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="ui_controlCenter.css">
+
 
  <script>
 $(document).ready(function() {
@@ -10,12 +12,44 @@ $(document).ready(function() {
 $("#duplicatesBtn").click(function() {
 	var request = $.ajax({
 		url: "app_checkForDuplicates.php",
-		type: "GET",			
-		dataType: "html"
+		type: "POST",			
+		dataType: "json"
 	});
 
 	request.done(function(msg) {
-		$("#consoleDiv").html(msg);			
+		var tmpTxt = "";
+		for(var line in msg) {
+
+			tmpTxt += msg[line];
+			tmpTxt +=  "<br/>";			
+		}
+		tmpTxt += "--------------------------<br/>"
+		$("#consoleDiv").prepend(tmpTxt);
+		
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		alert( "Request failed: " + textStatus );
+	});
+});
+
+$("#classificationBtn").click(function() {
+	var request = $.ajax({
+		url: "app_proposeClassifications.php",
+		type: "POST",			
+		dataType: "json"
+	});
+
+	request.done(function(msg) {
+		var tmpTxt = "";
+		for(var line in msg) {
+
+			tmpTxt += msg[line];
+			tmpTxt +=  "<br/>";			
+		}
+		tmpTxt += "--------------------------<br/>"
+		$("#consoleDiv").prepend(tmpTxt);
+		
 	});
 
 	request.fail(function(jqXHR, textStatus) {
