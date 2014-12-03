@@ -57,6 +57,31 @@ $("#classificationBtn").click(function() {
 	});
 });
 
+
+$("#classificationStatusBtn").click(function() {
+	var request = $.ajax({
+		url: "app_checkForClassifications.php",
+		type: "POST",			
+		dataType: "json"
+	});
+
+	request.done(function(msg) {
+		var tmpTxt = "";
+		for(var line in msg) {
+
+			tmpTxt += msg[line];
+			tmpTxt +=  "<br/>";			
+		}
+		tmpTxt += "--------------------------<br/>"
+		$("#consoleDiv").prepend(tmpTxt);
+		
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		alert( "Request failed: " + textStatus );
+	});
+});
+
 });
  </script>
 </head>
@@ -65,6 +90,7 @@ $("#classificationBtn").click(function() {
 
 <button class="commandBtn" id="duplicatesBtn">Check for duplicates</button>
 <button class="commandBtn" id="classificationBtn">Propose classifications</button>
+<button class="commandBtn" id="classificationStatusBtn">Set classification status</button>
 
 <div id="consoleDiv">
  I am the console.

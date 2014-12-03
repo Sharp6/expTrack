@@ -59,14 +59,18 @@ class updater {
 			OR info like '%APOT MUYLAERT%'
 			OR info like '%APOTHEEK%'
 			OR info like '%CHRISTELIJKE MUTUALITEIT%'
+			OR info like '%CHRISTELIJKE MUTUALITT%'
 			OR info like '%CM ANTWERPEN%'
-			OR info like '%PAUL MARCELIS%')
+			OR info like '%PAUL MARCELIS%'
+			OR info like '%DR LEMMENS%')
 			AND status = 'notDuplicate'");
 
 		// TRANSFERS
 		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
 			SET categorieid = 24, status='classificationProposed'
 			WHERE (info LIKE '%GEZAMENLIJKE REKENING%'
+			OR info like 'domiciliering'
+			OR info like 'Huysmans Philip.'
 			OR info like '%Debet ten voordele van BCC-MASTERCARD%')
 			AND status = 'notDuplicate'");
 
@@ -79,13 +83,15 @@ class updater {
 		// TELECOM
 		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
 			SET categorieid = 25, status='classificationProposed'
-			WHERE info LIKE '%Telenet N V%'
+			WHERE (info LIKE '%Telenet N V%'
+			OR info LIKE '%MOBISTAR%')
 			AND status = 'notDuplicate'");
 
 		// INKOMSTEN
 		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
 			SET categorieid = 26, status='classificationProposed'
 			WHERE (info LIKE 'UNIVERSITEIT ANTWERPEN,/A/%'
+			OR info LIKE '%OV VLAAMSE GEMEENSCHAP BOUDEWIJNLAAN%'
 			)
 			AND status = 'notDuplicate'");
 
@@ -101,6 +107,7 @@ class updater {
 		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
 			SET categorieid = 5, status='classificationProposed'
 			WHERE (info LIKE 'ESSENT BELGIUM%'
+			OR info like 'ESSENT Belgium%'
 			OR info like 'Uw overschrijving-ESSENT BELGIUM%'
 			OR info like 'Uw overschrijving-AWW%')
 			AND status = 'notDuplicate'");
@@ -109,6 +116,7 @@ class updater {
 		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
 			SET categorieid = 8, status='classificationProposed'
 			WHERE (info LIKE 'SPOTIFY%'
+			OR info like 'itunes%'
 			OR info like 'MUSICNOTES%')
 			AND status = 'notDuplicate'");
 
@@ -132,11 +140,22 @@ class updater {
 			WHERE (info LIKE 'BABY-DUMP%'
 			OR info like '%LAND VAN OOIT%')
 			AND status = 'notDuplicate'");
-		
+
+		// GIFTEN
+		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
+			SET categorieid = 36, status='classificationProposed'
+			WHERE (info LIKE '%UNICEF%'
+			)
+			AND status = 'notDuplicate'");
+
+		// PENSIOEN
+		$numberOfClassifications += $this->myDa->execute("UPDATE verrichtingen
+			SET categorieid = 12, status='classificationProposed'
+			WHERE (info LIKE '%PRICOS%'
+			)
+			AND status = 'notDuplicate'");
 
 		return $numberOfClassifications;
 	}
-
-
 }
 ?>

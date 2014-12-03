@@ -8,7 +8,8 @@ class overviewApp {
 
 	function __construct() {
 		$this->myDa = new financeDA();
-		$this->businessRules[] = "AND verrichtingen.categorieid != 31";
+		$this->businessRules[] = "AND (verrichtingen.categorieid != '31' AND verrichtingen.categorieid != '10')";
+
 	}
 
 	public function querybuilder($month){
@@ -67,6 +68,9 @@ class overviewApp {
 
 
 $myOverviewApp = new overviewApp();
+$janArray = $myOverviewApp->getOverviewForMonth(1);
+$febArray = $myOverviewApp->getOverviewForMonth(2);
+$marchArray = $myOverviewApp->getOverviewForMonth(3);
 $aprilArray = $myOverviewApp->getOverviewForMonth(4);
 $mayArray = $myOverviewApp->getOverviewForMonth(5);
 
@@ -86,10 +90,25 @@ var data = {
 		{
 			fillColor : "rgba(220,0,0,0.5)",
 			strokeColor : "rgba(220,220,220,1)",
-			data : <?php echo json_encode($aprilArray[1]); ?>
+			data : <?php echo json_encode($janArray[1]); ?>
+		},
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			data : <?php echo json_encode($febArray[1]); ?>
 		},
 		{
 			fillColor : "rgba(0,0,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			data : <?php echo json_encode($marchArray[1]); ?>
+		},
+		{
+			fillColor : "rgba(0,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			data : <?php echo json_encode($aprilArray[1]); ?>
+		},
+		{
+			fillColor : "rgba(220,0,220,0.5)",
 			strokeColor : "rgba(220,220,220,1)",
 			data : <?php echo json_encode($mayArray[1]); ?>
 		}
@@ -97,7 +116,15 @@ var data = {
 }
 
 var options = {
-
+scaleOverride : true,
+	
+	//** Required if scaleOverride is true **
+	//Number - The number of steps in a hard coded scale
+	scaleSteps : 20,
+	//Number - The value jump in the hard coded scale
+	scaleStepWidth : 100,
+	//Number - The scale starting value
+	scaleStartValue : 0
 }
   //Get context with jQuery - using jQuery's .get() method.
   var ctx = $("#myChart").get(0).getContext("2d");
@@ -111,10 +138,41 @@ var options = {
 <body>
 <p>
 <table>
-<tr><td>Maand:</td><td><b>April</b></td><td><b>Mei</b></td></tr>
-<tr><td>Kosten:</td><td> <?php echo $aprilArray[2]; ?></td><td> <?php echo $mayArray[2]; ?></td></tr>
-<tr><td>Inkomsten: </td><td><?php echo $aprilArray[3]; ?></td><td><?php echo $mayArray[3]; ?></td></tr>
-<tr><td>Verschil: </td><td><?php echo $aprilArray[3] - $aprilArray[2]; ?></td><td><?php echo $mayArray[3] - $mayArray[2]; ?></td></tr>
+<tr>
+	<td>Maand:</td>
+	<td><b>Januari</b></td>
+	<td><b>Februari</b></td>
+	<td><b>Maart</b></td>
+	<td><b>April</b></td>
+	<td><b>Mei</b></td>
+</tr>
+
+<tr>
+	<td>Kosten:</td>
+	<td> <?php echo $janArray[2]; ?></td>
+	<td> <?php echo $febArray[2]; ?></td>
+	<td> <?php echo $marchArray[2]; ?></td>
+	<td> <?php echo $aprilArray[2]; ?></td>
+	<td> <?php echo $mayArray[2]; ?></td>
+</tr>
+
+<tr>
+	<td>Inkomsten: </td>
+	<td><?php echo $janArray[3]; ?></td>
+	<td><?php echo $febArray[3]; ?></td>
+	<td><?php echo $marchArray[3]; ?></td>
+	<td><?php echo $aprilArray[3]; ?></td>
+	<td><?php echo $mayArray[3]; ?></td>
+</tr>
+
+<tr>
+	<td>Verschil: </td>
+	<td><?php echo $janArray[3] - $janArray[2]; ?></td>
+	<td><?php echo $febArray[3] - $febArray[2]; ?></td>
+	<td><?php echo $marchArray[3] - $marchArray[2]; ?></td>
+	<td><?php echo $aprilArray[3] - $aprilArray[2]; ?></td>
+	<td><?php echo $mayArray[3] - $mayArray[2]; ?></td>
+</tr>
 </p>
 
 <canvas id="myChart" width="1000" height="400"></canvas>
